@@ -1,6 +1,10 @@
 import type { Incident, Monitor, MonitorStatus, RawLogEntry, RawMonitor, RawResponse } from '../types'
 
-const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT ?? '/api/uptimerobot'
+// Monitor-specific API key (safe for client-side use: it can only read this one
+// monitor, and UptimeRobot sends CORS headers for it). Override via env if needed.
+const DEFAULT_API_KEY = 'm804358825-6377a26848c9dea31f7751e8'
+const API_KEY = (import.meta.env.VITE_UPTIMEROBOT_API_KEY as string | undefined) ?? DEFAULT_API_KEY
+const API_ENDPOINT = (import.meta.env.VITE_API_ENDPOINT as string | undefined) ?? 'https://api.uptimerobot.com/v2/getMonitors'
 
 const DAY = 86400
 const UPTIME_RANGE_DAYS = 90
@@ -111,6 +115,7 @@ export async function fetchMonitors(): Promise<Monitor[]> {
     .filter(Boolean)
 
   const params = new URLSearchParams({
+    api_key: API_KEY,
     format: 'json',
     logs: '1',
     response_times: '1',
@@ -124,7 +129,7 @@ export async function fetchMonitors(): Promise<Monitor[]> {
   try {
     response = await fetch(API_ENDPOINT, { method: 'POST', body: params })
   } catch {
-    throw new ApiError('Network error — could not reach the API proxy.')
+    throw new ApiError('Network error — could not reach the UptimeRobot API.')
   }
 
   if (response.status === 429) {

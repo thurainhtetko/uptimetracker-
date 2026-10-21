@@ -27,20 +27,20 @@ export function ResponseBarComparison({ monitors }: ResponseBarComparisonProps) 
   return (
     <ResponsiveContainer width="100%" height={Math.max(180, data.length * 52)}>
       <BarChart data={data} layout="vertical" margin={{ top: 4, right: 56, bottom: 4, left: 8 }}>
-        <CartesianGrid stroke="rgba(110,118,129,0.15)" horizontal={false} />
+        <CartesianGrid stroke="rgba(255,255,255,0.08)" horizontal={false} />
         <XAxis type="number" hide />
         <YAxis
           type="category"
           dataKey="name"
           width={160}
-          stroke="rgba(110,118,129,0.4)"
+          stroke="rgba(255,255,255,0.18)"
           tick={{ fill: '#8b949e', fontSize: 11 }}
           tickLine={false}
           tickFormatter={(name: string) => (name.length > 22 ? `${name.slice(0, 21)}…` : name)}
         />
         <Tooltip
           contentStyle={tooltipStyle}
-          cursor={{ fill: 'rgba(110,118,129,0.08)' }}
+          cursor={{ fill: 'rgba(255,255,255,0.05)' }}
           formatter={(value) => [formatMs(Number(value)), 'Avg response']}
         />
         <Bar dataKey="ms" radius={[0, 4, 4, 0]} isAnimationActive={false} label={renderBarLabel}>

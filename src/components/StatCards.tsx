@@ -55,12 +55,6 @@ export function StatCards({ monitors }: StatCardsProps) {
       tone: (avgResponse ?? 0) < 500 ? 'success' : (avgResponse ?? 0) < 1500 ? 'warn' : 'danger',
       detail: 'Latest checks',
     },
-    {
-      label: 'Monitors',
-      value: `${up} / ${total} up`,
-      tone: down > 0 ? 'danger' : 'success',
-      detail: down > 0 ? `${down} down` : paused > 0 ? `${paused} paused` : 'All healthy',
-    },
   ]
 
   return (

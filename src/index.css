@@ -1,9 +1,9 @@
 :root {
-  --bg: #0b0f14;
-  --bg-panel: #12181f;
-  --bg-elevated: #161b22;
-  --border: rgba(110, 118, 129, 0.25);
-  --border-strong: rgba(110, 118, 129, 0.4);
+  --bg: #171717;
+  --bg-panel: #212121;
+  --bg-elevated: #212121;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
   --text: #e6edf3;
   --text-muted: #8b949e;
   --green: #3fb950;
@@ -28,9 +28,9 @@ body {
 
 body {
   background:
-    radial-gradient(1200px 600px at 80% -10%, rgba(88, 166, 255, 0.07), transparent 60%),
-    radial-gradient(900px 500px at 0% 0%, rgba(63, 185, 80, 0.05), transparent 55%),
+    radial-gradient(1200px 600px at 80% -10%, rgba(255, 255, 255, 0.03), transparent 60%),
     var(--bg);
+  color: var(--text);
   color: var(--text);
   font-family: var(--font);
   font-size: 14px;
@@ -67,7 +67,7 @@ body {
   width: 42px;
   height: 42px;
   border-radius: 10px;
-  background: linear-gradient(135deg, rgba(88, 166, 255, 0.2), rgba(63, 185, 80, 0.15));
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border);
   color: var(--blue);
 }
@@ -116,7 +116,7 @@ body {
 }
 
 .btn:hover:not(:disabled) {
-  background: #1f2630;
+  background: #2a2a2a;
   border-color: var(--text-muted);
 }
 
@@ -163,8 +163,8 @@ body {
 
 .badge--paused {
   color: var(--gray);
-  background: rgba(110, 118, 129, 0.12);
-  border-color: rgba(110, 118, 129, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
 .badge--starting {
@@ -295,7 +295,7 @@ body {
 
 .stat-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
@@ -442,7 +442,7 @@ body {
 .bar--warn { background: var(--amber); }
 .bar--bad { background: #f0883e; }
 .bar--down { background: var(--red); }
-.bar--nodata { background: rgba(110, 118, 129, 0.25); }
+.bar--nodata { background: rgba(255, 255, 255, 0.12); }
 
 .uptime-bars__legend {
   display: flex;
@@ -553,7 +553,7 @@ body {
 }
 
 .monitor-card {
-  background: var(--bg-elevated);
+  background: #1a1a1a;
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 14px 16px;
@@ -632,7 +632,7 @@ body {
 .loading-grid .skeleton {
   height: 180px;
   border-radius: var(--radius);
-  background: linear-gradient(100deg, var(--bg-panel) 40%, #1a212b 50%, var(--bg-panel) 60%);
+  background: linear-gradient(100deg, var(--bg-panel) 40%, #2a2a2a 50%, var(--bg-panel) 60%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
   border: 1px solid var(--border);

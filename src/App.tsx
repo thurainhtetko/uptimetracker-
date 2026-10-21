@@ -5,7 +5,6 @@ import { Panel } from './components/Panel'
 import { ResponseBarComparison } from './components/ResponseBarComparison'
 import { ResponseTimeChart } from './components/ResponseTimeChart'
 import { StatCards } from './components/StatCards'
-import { StatusDonut } from './components/StatusDonut'
 import { UptimeBars } from './components/UptimeBars'
 import { UptimeTrendChart } from './components/UptimeTrendChart'
 import { useMonitors } from './hooks/useMonitors'
@@ -36,14 +35,9 @@ export default function App() {
         <main className="content">
           <StatCards monitors={monitors} />
 
-          <div className="grid grid--2-1">
-            <Panel title="Response time" subtitle="Last 24 hours, per monitor">
-              <ResponseTimeChart monitors={monitors} />
-            </Panel>
-            <Panel title="Monitor status" subtitle="Current state breakdown">
-              <StatusDonut monitors={monitors} />
-            </Panel>
-          </div>
+          <Panel title="Response time" subtitle="Last 24 hours">
+            <ResponseTimeChart monitors={monitors} />
+          </Panel>
 
           <Panel title="Uptime over time" subtitle="Daily uptime %, last 30 days">
             <UptimeTrendChart monitors={monitors} />

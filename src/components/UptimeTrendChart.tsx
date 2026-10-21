@@ -44,11 +44,11 @@ export function UptimeTrendChart({ monitors }: UptimeTrendChartProps) {
   return (
     <ResponsiveContainer width="100%" height={260}>
       <LineChart data={data} margin={{ top: 8, right: 12, bottom: 0, left: 0 }}>
-        <CartesianGrid stroke="rgba(110,118,129,0.15)" vertical={false} />
+        <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
         <XAxis
           dataKey="date"
           tickFormatter={formatDayLabel}
-          stroke="rgba(110,118,129,0.4)"
+          stroke="rgba(255,255,255,0.18)"
           tick={{ fill: '#8b949e', fontSize: 11 }}
           tickLine={false}
           minTickGap={40}
@@ -56,7 +56,7 @@ export function UptimeTrendChart({ monitors }: UptimeTrendChartProps) {
         <YAxis
           domain={[90, 100]}
           tickFormatter={(v: number) => `${v}%`}
-          stroke="rgba(110,118,129,0.4)"
+          stroke="rgba(255,255,255,0.18)"
           tick={{ fill: '#8b949e', fontSize: 11 }}
           tickLine={false}
           width={56}

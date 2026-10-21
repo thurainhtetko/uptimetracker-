@@ -52,18 +52,18 @@ export function ResponseTimeChart({ monitors }: ResponseTimeChartProps) {
             </linearGradient>
           ))}
         </defs>
-        <CartesianGrid stroke="rgba(110,118,129,0.15)" vertical={false} />
+        <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
         <XAxis
           dataKey="t"
           tickFormatter={formatHourLabel}
-          stroke="rgba(110,118,129,0.4)"
+          stroke="rgba(255,255,255,0.18)"
           tick={{ fill: '#8b949e', fontSize: 11 }}
           tickLine={false}
           minTickGap={48}
         />
         <YAxis
           tickFormatter={(v: number) => formatMs(v)}
-          stroke="rgba(110,118,129,0.4)"
+          stroke="rgba(255,255,255,0.18)"
           tick={{ fill: '#8b949e', fontSize: 11 }}
           tickLine={false}
           width={72}

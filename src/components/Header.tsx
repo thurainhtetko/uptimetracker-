@@ -17,17 +17,6 @@ interface HeaderProps {
 export function Header({ refreshing, lastUpdated, mock, onRefresh }: HeaderProps) {
   return (
     <header className="header">
-      <div className="header__brand">
-        <span className="header__logo" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-          </svg>
-        </span>
-        <div>
-          <h1 className="header__title">UP Time Tracker</h1>
-          <p className="header__tagline">Service availability dashboard</p>
-        </div>
-      </div>
       <div className="header__actions">
         {mock && <span className="badge badge--mock">MOCK DATA</span>}
         {lastUpdated && (

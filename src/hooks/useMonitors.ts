@@ -23,34 +23,39 @@ export function useMonitors() {
     lastUpdated: null,
     refreshing: false,
   })
-  const inFlight = useRef(false)
+  const inFlight = useRef<Promise<void> | null>(null)
 
-  const load = useCallback(async (manual: boolean) => {
-    if (inFlight.current) return
-    inFlight.current = true
+  const load = useCallback((manual: boolean): Promise<void> => {
+    if (inFlight.current) return inFlight.current
     if (manual) setState((s) => ({ ...s, refreshing: true }))
-    try {
-      const monitors = USE_MOCK ? await fetchMockMonitors() : await fetchMonitors()
-      setState({
-        monitors,
-        loading: false,
-        error: null,
-        rateLimited: false,
-        lastUpdated: new Date(),
-        refreshing: false,
-      })
-    } catch (err) {
-      const message = err instanceof ApiError ? err.message : 'Unexpected error while loading monitors.'
-      setState((s) => ({
-        ...s,
-        loading: false,
-        refreshing: false,
-        error: message,
-        rateLimited: err instanceof ApiError && err.rateLimited,
-      }))
-    } finally {
-      inFlight.current = false
-    }
+
+    const request = (async () => {
+      try {
+        const monitors = USE_MOCK ? await fetchMockMonitors() : await fetchMonitors()
+        setState({
+          monitors,
+          loading: false,
+          error: null,
+          rateLimited: false,
+          lastUpdated: new Date(),
+          refreshing: false,
+        })
+      } catch (err) {
+        const message = err instanceof ApiError ? err.message : 'Unexpected error while loading monitors.'
+        setState((s) => ({
+          ...s,
+          loading: false,
+          refreshing: false,
+          error: message,
+          rateLimited: err instanceof ApiError && err.rateLimited,
+        }))
+      } finally {
+        inFlight.current = null
+      }
+    })()
+
+    inFlight.current = request
+    return request
   }, [])
 
   const refresh = useCallback(() => load(true), [load])

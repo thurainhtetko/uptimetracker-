@@ -1,11 +1,13 @@
+import type { ReactNode } from 'react'
 import type { Monitor } from '../types'
 import { formatMs, formatUptime } from '../utils/format'
 
 interface StatCardsProps {
   monitors: Monitor[]
+  refreshCard?: ReactNode
 }
 
-export function StatCards({ monitors }: StatCardsProps) {
+export function StatCards({ monitors, refreshCard }: StatCardsProps) {
   const total = monitors.length
   const up = monitors.filter((m) => m.status === 'up').length
   const down = monitors.filter((m) => m.status === 'down').length
@@ -66,6 +68,7 @@ export function StatCards({ monitors }: StatCardsProps) {
           {card.detail && <span className="stat-card__detail">{card.detail}</span>}
         </div>
       ))}
+      {refreshCard}
     </div>
   )
 }

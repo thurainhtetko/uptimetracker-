@@ -1,7 +1,7 @@
-import { Header } from './components/Header'
 import { IncidentTimeline } from './components/IncidentTimeline'
 import { MonitorList } from './components/MonitorList'
 import { Panel } from './components/Panel'
+import { RefreshCard } from './components/RefreshCard'
 import { ResponseBarComparison } from './components/ResponseBarComparison'
 import { ResponseTimeChart } from './components/ResponseTimeChart'
 import { StatCards } from './components/StatCards'
@@ -14,8 +14,6 @@ export default function App() {
 
   return (
     <div className="app">
-      <Header refreshing={refreshing} lastUpdated={lastUpdated} mock={mock} onRefresh={() => void refresh()} />
-
       {error && (
         <div className={`alert ${rateLimited ? 'alert--warn' : 'alert--error'}`} role="alert">
           <span>{error}</span>
@@ -33,7 +31,17 @@ export default function App() {
         </div>
       ) : (
         <main className="content">
-          <StatCards monitors={monitors} />
+          <StatCards
+            monitors={monitors}
+            refreshCard={
+              <RefreshCard
+                refreshing={refreshing}
+                lastUpdated={lastUpdated}
+                mock={mock}
+                onRefresh={() => void refresh()}
+              />
+            }
+          />
 
           <Panel title="Response time" subtitle="Last 24 hours">
             <ResponseTimeChart monitors={monitors} />
@@ -61,10 +69,6 @@ export default function App() {
           </Panel>
         </main>
       )}
-
-      <footer className="footer">
-        <span>Data from UptimeRobot · refreshed manually</span>
-      </footer>
     </div>
   )
 }

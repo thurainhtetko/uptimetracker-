@@ -37,13 +37,15 @@ function parseRatioList(value: string | undefined): number[] {
 
 function statusFromCode(code: number): MonitorStatus {
   switch (code) {
+    case 0:
+      return 'paused'
     case 1:
-      return 'up'
+      return 'starting'
     case 2:
+      return 'up'
+    case 8:
     case 9:
       return 'down'
-    case 8:
-      return 'starting'
     default:
       return 'paused'
   }
@@ -65,7 +67,7 @@ export function toIncidents(logs: RawLogEntry[] | undefined): Incident[] {
   for (const entry of sorted) {
     if (entry.type === 1) {
       open = { startedAt: entry.datetime, reason: reasonText(entry.reason) }
-    } else if (entry.type === 2 && open) {
+    } else if ((entry.type === 2 || entry.type === 99) && open) {
       incidents.push({
         startedAt: open.startedAt,
         endedAt: entry.datetime,

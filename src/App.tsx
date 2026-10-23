@@ -47,7 +47,7 @@ export default function App() {
             <ResponseTimeChart monitors={monitors} />
           </Panel>
 
-          <Panel title="Uptime over time" subtitle="Daily uptime %, last 30 days">
+          <Panel title="Uptime over time" subtitle="Daily uptime %, last 90 days">
             <UptimeTrendChart monitors={monitors} />
           </Panel>
 

@@ -1,61 +1,64 @@
 import type { Monitor } from '../types'
-import { formatInterval, formatMs, formatUptime } from '../utils/format'
-import { StatusBadge } from './Header'
+import { STATUS_META } from '../types'
+import { formatUptime } from '../utils/format'
 
 interface MonitorListProps {
   monitors: Monitor[]
+  selectedId: number | null
+  onSelect: (id: number) => void
 }
 
-export function MonitorList({ monitors }: MonitorListProps) {
+export function MonitorList({ monitors, selectedId, onSelect }: MonitorListProps) {
   if (monitors.length === 0) {
     return <p className="empty-state">No monitors configured.</p>
   }
 
   return (
-    <div className="monitor-list">
-      {monitors.map((m) => (
-        <article key={m.id} className="monitor-card">
-          <div className="monitor-card__head">
-            <div>
-              <h3 className="monitor-card__name">
-                <a href={m.url} target="_blank" rel="noreferrer">
-                  {m.name}
-                </a>
-              </h3>
-              <p className="monitor-card__url">{m.url}</p>
-            </div>
-            <StatusBadge status={m.status} />
-          </div>
-          <dl className="monitor-card__stats">
-            <div>
-              <dt>Uptime 7d</dt>
-              <dd className={uptimeTone(m.uptime.d7)}>{formatUptime(m.uptime.d7)}</dd>
-            </div>
-            <div>
-              <dt>Uptime 30d</dt>
-              <dd className={uptimeTone(m.uptime.d30)}>{formatUptime(m.uptime.d30)}</dd>
-            </div>
-            <div>
-              <dt>Uptime 90d</dt>
-              <dd className={uptimeTone(m.uptime.d90)}>{formatUptime(m.uptime.d90)}</dd>
-            </div>
-            <div>
-              <dt>Avg response</dt>
-              <dd>{formatMs(m.avgResponseMs)}</dd>
-            </div>
-            <div>
-              <dt>Interval</dt>
-              <dd>{formatInterval(m.intervalSec)}</dd>
-            </div>
-          </dl>
-        </article>
-      ))}
-    </div>
-  )
-}
+    <ul className="monitor-list" role="list">
+      {monitors.map((monitor) => {
+        const meta = STATUS_META[monitor.status]
+        const selected = monitor.id === selectedId
 
-function uptimeTone(ratio: number): string {
-  if (ratio >= 99.9) return 'tone-ok'
-  if (ratio >= 97) return 'tone-warn'
-  return 'tone-bad'
+        return (
+          <li
+            key={monitor.id}
+            className={`monitor-card${selected ? ' is-selected' : ''}`}
+            onClick={() => onSelect(monitor.id)}
+          >
+            <div className="monitor-card__main">
+              <span className={`status-dot status-dot--${meta.tone}`} aria-hidden="true" />
+              <a
+                className="monitor-card__name"
+                href={monitor.url}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(event) => event.stopPropagation()}
+              >
+                {monitor.name}
+              </a>
+              <span className={`badge badge--${meta.tone}`}>{meta.label}</span>
+            </div>
+            <div className="monitor-card__side">
+              <span className="monitor-card__uptime">
+                <span className="monitor-card__uptime-label">All-time</span>
+                <strong>{formatUptime(monitor.allTimeUptime ?? monitor.uptime.d90)}</strong>
+              </span>
+              <button
+                type="button"
+                className="btn btn--small"
+                aria-pressed={selected}
+                aria-label={selected ? `${monitor.name} details selected` : `View details for ${monitor.name}`}
+                onClick={(event) => {
+                  event.stopPropagation()
+                  onSelect(monitor.id)
+                }}
+              >
+                {selected ? 'Selected' : 'View details'}
+              </button>
+            </div>
+          </li>
+        )
+      })}
+    </ul>
+  )
 }

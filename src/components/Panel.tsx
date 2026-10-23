@@ -10,7 +10,7 @@ interface PanelProps {
 
 export function Panel({ title, subtitle, action, children, className = '' }: PanelProps) {
   return (
-    <section className={`panel ${className}`}>
+    <section className={`panel ${className}`.trim()}>
       <header className="panel__header">
         <div>
           <h2 className="panel__title">{title}</h2>

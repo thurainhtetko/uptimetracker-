@@ -5,7 +5,7 @@ A dark, monitor-focused status page for `host.thurain.website`, built with React
 ## Stack
 
 - React 19 + TypeScript + Vite (static build)
-- One Vercel serverless function (`api/status.ts`) backed by `server/status.ts`
+- One self-contained Vercel serverless function (`api/status.ts`)
 - UptimeRobot v2 `getMonitors` as the upstream data source
 
 ## Local development

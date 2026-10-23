@@ -29,7 +29,9 @@ Vite inlines `VITE_*` variables at build time.
 | `VITE_UPTIMEROBOT_API_KEY` | Yes | Read-only or monitor-specific UptimeRobot key |
 | `VITE_UPTIMEROBOT_MONITOR_IDS` | No | Comma-separated monitor IDs; empty means all monitors on the key |
 
-On Vercel, add these under **Project → Settings → Environment Variables** for the environments you deploy, then redeploy. The values must be present at build time because they are compiled into the JavaScript bundle.
+Production values are committed in `.env.production`, so Vercel picks them up automatically during `npm run build`; no dashboard environment variables are required. The key is compiled into the public JavaScript bundle.
+
+Local development reads `.env` (ignored by git). You can copy `.env.example` to `.env` and fill in the same values.
 
 ## Deploying to Vercel
 
